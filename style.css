@@ -1,0 +1,159 @@
+/* Reset mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* --- HEADER STYLES --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+}
+
+.nav-tabs {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.tab-item {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    padding-bottom: 5px;
+    color: #5f6368;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.tab-item:hover {
+    color: #0f254e;
+}
+
+/* Trạng thái đang chọn (Active) */
+.tab-item.active {
+    color: #e65125;
+    border-bottom: 3px solid #e65125;
+}
+
+/* --- MAIN CONTENT STYLES --- */
+main {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Ẩn tất cả các tab content mặc định */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s;
+}
+
+/* Chỉ hiện tab có class active */
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- HOME PAGE STYLES --- */
+.title {
+    font-size: 2.5rem;
+    color: #0f254e;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+/* --- PHẦN SỬA ĐỔI QUAN TRỌNG: CĂN GIỮA ẢNH --- */
+.team-image-container {
+    /* Sử dụng Flexbox để căn giữa tuyệt đối */
+    display: flex; 
+    justify-content: center; /* Căn giữa ngang */
+    align-items: center;     /* Căn giữa dọc */
+    
+    margin: 0 auto 30px; /* Cách dưới 30px */
+    width: 100%;
+    max-width: 800px; /* Giới hạn chiều rộng khung chứa */
+    
+    /* Trang trí khung ảnh (tùy chọn) */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    overflow: hidden; /* Bo tròn các góc ảnh */
+    background-color: #fff;
+}
+
+/* Tác động trực tiếp vào thẻ img bên trong container */
+.team-image-container img {
+    width: auto;      /* Để auto hoặc 100% tùy nhu cầu */
+    max-width: 100%;  /* Đảm bảo ảnh không bị tràn ra ngoài khung */
+    height: auto;     /* Giữ tỷ lệ khung hình */
+    display: block;   /* Loại bỏ khoảng trắng thừa của thẻ inline */
+}
+
+.team-info {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 5px solid #e65125;
+    display: inline-block;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.team-name, .team-slogan {
+    font-size: 1.2rem;
+    margin: 5px 0;
+}
+
+/* --- PLACEHOLDER STYLES --- */
+.placeholder-box {
+    border: 2px dashed #ccc;
+    padding: 50px;
+    border-radius: 10px;
+    background-color: #eee;
+    color: #777;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .title { font-size: 1.8rem; }
+    
+    .nav-tabs {
+        gap: 15px;
+        font-size: 14px;
+    }
+}

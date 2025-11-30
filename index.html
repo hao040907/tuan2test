@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCMUTE - DSC Landing Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="assets/NOBG-B.png" alt="Logo CLB HCMUTE-DSC" class="logo">
+        </div>
+        <nav>
+            <ul class="nav-tabs">
+                <li class="tab-item active" onclick="openTab('home')">Trang chủ</li>
+                <li class="tab-item" onclick="openTab('about')">Về chúng tôi</li>
+                <li class="tab-item" onclick="openTab('contact')">Liên hệ</li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="tab-content active">
+            <div class="hero-section">
+                <h1 class="title">Git & GitHub Study Jam</h1>
+                <h2 class="subtitle">HCMUTE-DSC 2025</h2>
+                
+                <div class="team-image-container">
+                    <img src="assets/Team_image.jpg" alt="Ảnh nhóm">
+                </div>
+                <div class="team-info">
+                    <p class="team-name">Tên nhóm: <strong>49 GẶP 500</strong></p>
+                    <p class="team-slogan">Slogan: <em>Code to Connect, Connect to Create</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="tab-content">
+            <div class="placeholder-box">
+                <h3>Về chúng tôi</h3>
+                <p>Nội dung đang được cập nhật (Placeholder)...</p>
+            </div>
+        </section>
+
+        <section id="contact" class="tab-content">
+            <div class="placeholder-box">
+                <h3>Liên hệ</h3>
+                <p>Thông tin liên hệ sẽ hiển thị ở đây (Placeholder)...</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
