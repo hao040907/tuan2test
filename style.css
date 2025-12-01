@@ -1,3 +1,10 @@
+:root {
+    --primary: #e65125;
+    --dark-blue: #0f254e;
+    --text: #333;
+    --text-light: #555;
+    --radius: 12px;
+}
 /* Reset mặc định */
 * {
     margin: 0;
@@ -9,6 +16,7 @@
 body {
     background-color: #f9f9f9;
     color: #333;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* --- HEADER STYLES --- */
@@ -17,8 +25,9 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 15px 50px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -38,29 +47,30 @@ header {
 .tab-item {
     cursor: pointer;
     font-weight: 600;
-    font-size: 16px;
-    padding-bottom: 5px;
+    font-size: 1rem;
+    padding: 10px 5px;
     color: #5f6368;
     transition: color 0.3s, border-bottom 0.3s;
 }
 
 .tab-item:hover {
-    color: #0f254e;
+    color: var(--primary);
 }
 
 /* Trạng thái đang chọn (Active) */
 .tab-item.active {
-    color: #e65125;
-    border-bottom: 3px solid #e65125;
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
 }
 
 /* --- MAIN CONTENT STYLES --- */
 main {
-    padding: 40px 20px;
-    max-width: 900px;
+    padding: 50px 20px;
+    max-width: 1000px;
     margin: 0 auto;
     text-align: center;
 }
+
 
 /* Ẩn tất cả các tab content mặc định */
 .tab-content {
@@ -83,11 +93,12 @@ main {
     font-size: 2.5rem;
     color: #0f254e;
     margin-bottom: 10px;
+    letter-spacing: 0.5px;
 }
 
 .subtitle {
     font-size: 1.5rem;
-    color: #555;
+    color: var(--text-light);
     margin-bottom: 30px;
     font-weight: 400;
 }
@@ -100,11 +111,12 @@ main {
     align-items: center;     /* Căn giữa dọc */
     
     margin: 0 auto 30px; /* Cách dưới 30px */
+    margin-bottom: 20px;
     width: 100%;
     max-width: 800px; /* Giới hạn chiều rộng khung chứa */
     
     /* Trang trí khung ảnh (tùy chọn) */
-    border-radius: 10px;
+    border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     overflow: hidden; /* Bo tròn các góc ảnh */
     background-color: #fff;
@@ -121,18 +133,24 @@ main {
 .team-info {
     background: white;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: var(--radius);
     border-left: 5px solid #e65125;
     display: inline-block;
     text-align: left;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 25px 25px;
+    line-height: 1.6;
 }
 
 .team-name, .team-slogan {
     font-size: 1.2rem;
     margin: 5px 0;
 }
-
+.team-slogan em {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--primary);
+}
 /* --- PLACEHOLDER STYLES --- */
 .placeholder-box {
     border: 2px dashed #ccc;
@@ -157,3 +175,134 @@ main {
         font-size: 14px;
     }
 }
+/* member */
+.about-container {
+    padding: 30px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.team-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.member-card {
+    background: #fff;
+    padding: 20px 15px;
+    width: 250px;
+    border-radius: 20px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+    text-align: center;
+    transition: transform .3s ease, box-shadow .3s ease;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: cardFade 0.6s ease forwards;
+    /* background: linear-gradient(135deg, rgba(255, 101, 37, 0.1), rgba(15,37,78,0.05));
+    backdrop-filter: blur(4px); */
+
+}
+.member-card:nth-child(2) {
+    animation-delay: .1s;
+}
+.member-card:nth-child(3) {
+    animation-delay: .2s;
+}
+
+@keyframes cardFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.member-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+.member-card:hover .member-photo {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+    border-color: var(--dark-blue);
+}
+.member-card:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: white;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.member-photo {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    transition: transform .3s ease, filter .3s ease;
+    border: 3px solid var(--primary);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.member-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.member-intro {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.social-links a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #0f254e;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgba(15, 37, 78, 0.05);
+    position: relative;
+}
+
+/* .social-links a:hover {
+    transform: translateY(-3px) scale(1.1);
+    color: var(--primary);
+} */
+
+.social-links a {
+    background: linear-gradient(90deg, #e65125, #0f254e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: background-position 0.5s;
+    background-size: 200% auto;
+}
+
+.social-links a:hover {
+    background-position: 100% center;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 600px) {
+    .team-members {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .member-card {
+        width: 90%;
+    }
+}
+
