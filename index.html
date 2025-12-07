@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HCMUTE - DSC Landing Page</title>
     <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header>
@@ -43,24 +46,25 @@
 
       <section id="about" class="tab-content">
         <h2 class="title">Thành viên nhóm</h2>
-        <div class="team-members">
-            
-          <div class="member-card" data-tooltip="Let's debug the world!">
+        <div class="member-card" data-tooltip="Mood today: cooking code">
             <img
-              src="assets\anh-thanh-vien-tu.jpg"
-              alt="Ảnh Võ Hoàng Tú"
+              src="assets/HaoMilk.jpg"
+              alt="Ảnh Trần Anh Hào"
               class="member-photo"
             />
-            <h4 class="member-name">
-            Võ Hoàng Tú</h4>
+            <h4 class="member-name">Trần Anh Hào</h4>
             <p class="member-intro">
-            EROR 404: FEAR NOT FOUND! Mình là Võ Hoàng Tú là thành viên của 49 gặp 500. Mình sẽ nỗ lực gấp 36 lần để hoàn thành tất cả những thử thách thú vị được giao.
+              Ây dô, what's up mọi người! Mình là thuyền trưởng của team "49 gặp 500", 
+              hiện tại đang công tác năm đầu tại lớp IT1. Nay mình đến với cuộc thi "Study Jam"
+              này với mục tiêu sẽ học hỏi và phát triển được các kỹ năng lập trình và kỹ năng mềm của bản thân
+              là chính (còn lấy được 500k đi ăn dooki là mười) và quen biết được nhiều anh/chị và các bạn hơn (>0<) 
             </p>
             <div class="social-links">
-              <a href="https://www.facebook.com/tu.vohoang" target="_blank">Facebook</a>
-              <a href="https://github.com/tuvohoang target="_blank">Github</a>
+              <a href="https://www.facebook.com/tran.anh.hao.877522" target="_blank">Facebook</a>
+              <a href="https://github.com/hao040907" target="_blank">Github</a>
             </div>
-          </div>
+        </div>
+        <div class="team-members">
           <div class="member-card" data-tooltip="Mood today:sleeping&daydream">
             <img
               src="./assets/anhthuytrang.jpg"
@@ -78,37 +82,54 @@
               <a
                 href="https://www.facebook.com/huynh.trang.856140"
                 target="_blank"
-                >Facebook</a>
-              <a href="https://github.com/trang0000" target="_blank">Github</a>
+                >Facebook</a
+              >
+              <a href="https://github.com/iw-aurora" target="_blank">Github</a>
             </div>
-          </div>
-          <div class="member-card" data-tooltip="Mood today: cooking code">
+        </div>
+        <div class="team-members">
+            <div class="member-card" data-tooltip="Let's debug the world!">
             <img
-              src="assets/HaoMilk.jpg"
-              alt="Ảnh Trần Anh Hào"
+              src="./assets/anh-thanh-vien-tu.jpg"
+              alt="Ảnh Võ Hoàng Tú"
               class="member-photo"
             />
-            <h4 class="member-name">Trần Anh Hào</h4>
+            <h4 class="member-name">
+            Võ Hoàng Tú</h4>
             <p class="member-intro">
-              Ây dô, what's up mọi người! Mình là thuyền trưởng của team "49 gặp 500", 
-              hiện tại đang công tác năm đầu tại lớp IT1. Nay mình đến với cuộc thi "Study Jam"
-              này với mục tiêu sẽ học hỏi và phát triển được các kỹ năng lập trình và kỹ năng mềm của bản thân
-              là chính (còn lấy được 500k đi ăn dooki là mười) và quen biết được nhiều anh/chị và các bạn hơn (>0<) 
+            EROR 404: FEAR NOT FOUND! Mình là Võ Hoàng Tú là thành viên của 49 gặp 500. Mình sẽ nỗ lực gấp 36 lần để hoàn thành tất cả những thử thách thú vị được giao.
             </p>
             <div class="social-links">
-              <a href="https://www.facebook.com/tran.anh.hao.877522" target="_blank">Facebook</a>
-              <a href="https://github.com/hao040907" target="_blank">Github</a>
+              <a href="https://www.facebook.com/tu.vohoang" target="_blank">Facebook</a>
+              <a href="https://github.com/tuvohoang" target="_blank">Github</a>
             </div>
-          </div>
+            </div>
         </div>
       </section>
 
       <section id="contact" class="tab-content">
-        <div class="placeholder-box">
-          <h3>Liên hệ</h3>
-          <p>Thông tin liên hệ sẽ hiển thị ở đây (Placeholder)...</p>
+        <div class="contact-container">
+          <h2 class="contact-title">Liên hệ</h2>
+          <form class="contact-form" id="contact-form">
+            <div class="form-group">
+              <label for="name">Tên</label>
+              <input type="text" id="name" name="name" placeholder="Nhập tên của bạn" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Nội dung</label>
+              <textarea id="message" name="message" placeholder="Nhập nội dung..." rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Gửi</button>
+          </form>
+          <div class="contact-history hidden">
+            <h3>Lịch sử liên hệ</h3>
+            <ul id="contact-list"></ul>
+          </div>
+          <button id="toggle-history" style="margin-bottom:15px;">Hiển thị lịch sử liên hệ</button>
+
         </div>
       </section>
+
     </main>
 
     <script src="script.js"></script>
