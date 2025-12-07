@@ -1,150 +1,90 @@
 function openTab(tabId) {
-    // 1. Ẩn tất cả các nội dung tab
     const contents = document.querySelectorAll('.tab-content');
-    contents.forEach(content => {
-        content.classList.remove('active');
-    });
+    contents.forEach(content => content.classList.remove('active'));
 
-    // 2. Xóa trạng thái 'active' khỏi tất cả các nút trên menu
     const tabs = document.querySelectorAll('.tab-item');
-    tabs.forEach(tab => {
-        tab.classList.remove('active');
-    });
+    tabs.forEach(tab => tab.classList.remove('active'));
 
-    // 3. Hiển thị nội dung tab được chọn
     const selectedContent = document.getElementById(tabId);
-    if (selectedContent) {
-        selectedContent.classList.add('active');
-    }
+    if (selectedContent) selectedContent.classList.add('active');
 
-    // 4. Thêm trạng thái 'active' cho nút vừa bấm
-    // Tìm nút có onclick chứa tabId tương ứng để active (cách đơn giản)
-    // Trong thực tế có thể dùng event.currentTarget, nhưng cách này dễ hiểu cho người mới.
     tabs.forEach(tab => {
-        if (tab.getAttribute('onclick').includes(tabId)) {
-            tab.classList.add('active');
-        }
+        if (tab.getAttribute('onclick').includes(tabId)) tab.classList.add('active');
+    });
+}
+
+const contactForm = document.getElementById('contact-form');
+const contactList = document.getElementById('contact-list');
+const toggleBtn = document.getElementById('toggle-history');
+const contactHistory = document.querySelector('.contact-history');
+
+//Render contact history
+function renderContactHistory() {
+    const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    contactList.innerHTML = '';
+
+    contacts.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `[${item.time}] ${item.name}: ${item.message}`;
+        contactList.appendChild(li);
     });
 
-    
+    contactList.scrollTop = contactList.scrollHeight;
 }
 
-/* --- SLIDER LOGIC --- */
-const track = document.querySelector('.slider-track');
-const slides = document.querySelectorAll('.slide');
+// Toast
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
 
-let currentIndex = 0;
-let isDragging = false;
-let startPos = 0;
-let currentTranslate = 0;
-let prevTranslate = 0;
-let animationID;
-let autoPlayInterval;
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.background = 'rgba(0,0,0,0.7)';
+    toast.style.color = '#fff';
+    toast.style.padding = '12px 20px';
+    toast.style.borderRadius = '10px';
+    toast.style.zIndex = 9999;
+    toast.style.opacity = 0;
+    toast.style.transition = 'opacity 0.3s';
 
-// 1. Khởi chạy Auto-play
-startAutoPlay();
+    requestAnimationFrame(() => toast.style.opacity = 1);
 
-function startAutoPlay() {
-    // Tự động chuyển ảnh sau mỗi 3 giây
-    autoPlayInterval = setInterval(() => {
-        nextSlide();
-    }, 3000);
+    setTimeout(() => {
+        toast.style.opacity = 0;
+        setTimeout(() => toast.remove(), 500);
+    }, 2800);
 }
 
-function stopAutoPlay() {
-    clearInterval(autoPlayInterval);
-}
+// Submit form
+contactForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-// 2. Xử lý sự kiện kéo (Mouse & Touch)
-// Cho chuột (Desktop)
-track.addEventListener('mousedown', touchStart);
-track.addEventListener('mouseup', touchEnd);
-track.addEventListener('mouseleave', () => {
-    if (isDragging) touchEnd();
+    const name = document.getElementById('name').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if (!name || !message) {
+        showToast("Vui lòng điền đầy đủ thông tin trước khi gửi!");
+        return;
+    }
+
+    const contactData = JSON.parse(localStorage.getItem('contacts')) || [];
+    contactData.push({ name, message, time: new Date().toLocaleString() });
+    localStorage.setItem('contacts', JSON.stringify(contactData));
+
+    showToast(`Chúng tôi đã nhận thông tin từ "${name}".Cảm ơn "${name}" đã liên hệ với chúng tôi. Chúng tôi sẽ cố gắng phản hồi bạn sớm nhất có thể.`);
+    contactForm.reset();
+
+    if (!contactHistory.classList.contains('hidden')) renderContactHistory();
 });
-track.addEventListener('mousemove', touchMove);
 
-// Cho cảm ứng (Mobile)
-track.addEventListener('touchstart', touchStart);
-track.addEventListener('touchend', touchEnd);
-track.addEventListener('touchmove', touchMove);
-
-function touchStart(index) {
-    return function(event) {
-        stopAutoPlay(); // Dừng tự động chạy khi người dùng tương tác
-        isDragging = true;
-        startPos = getPositionX(event);
-        animationID = requestAnimationFrame(animation);
-        track.style.transition = 'none'; // Tắt transition để kéo cho mượt (real-time)
-    }
-}
-
-// Hàm gán sự kiện (để gọi đúng context)
-track.onmousedown = touchStart(currentIndex);
-track.ontouchstart = touchStart(currentIndex);
-
-function touchEnd() {
-    isDragging = false;
-    cancelAnimationFrame(animationID);
-
-    const movedBy = currentTranslate - prevTranslate;
-
-    // Nếu kéo đủ xa (lớn hơn 100px) thì chuyển slide
-    if (movedBy < -100 && currentIndex < slides.length - 1) {
-        currentIndex += 1;
-    }
-    if (movedBy > 100 && currentIndex > 0) {
-        currentIndex -= 1;
-    }
-
-    setPositionByIndex();
-    track.style.transition = 'transform 0.8s ease-out'; // Bật lại transition
-    track.classList.add('bluring');
-    startAutoPlay(); // Chạy lại tự động sau khi thả tay
-}
-
-function touchMove(event) {
-    if (isDragging) {
-        const currentPosition = getPositionX(event);
-        currentTranslate = prevTranslate + currentPosition - startPos;
-    }
-}
-
-function getPositionX(event) {
-    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-}
-
-function animation() {
-    setSliderPosition();
-    if (isDragging) requestAnimationFrame(animation);
-}
-
-function setSliderPosition() {
-    track.style.transform = `translateX(${currentTranslate}px)`;
-}
-
-// 3. Chuyển đến vị trí slide cụ thể
-function setPositionByIndex() {
-    currentTranslate = currentIndex * -track.clientWidth; // Dùng chiều rộng thực tế của container
-    prevTranslate = currentTranslate;
-    setSliderPosition();
-}
-
-// 4. Hàm chuyển slide tự động
-function nextSlide() {
-    if (currentIndex < slides.length - 1) {
-        currentIndex++;
-    } else {
-        currentIndex = 0; // Quay về đầu nếu đang ở cuối
-    }
-    // Khi hiệu ứng trượt kết thúc, gỡ bỏ class làm mờ
-    track.addEventListener('transitionend', () => {
-    track.classList.remove('bluring');
-});
-    setPositionByIndex();
-}
-
-// Khi hiệu ứng trượt kết thúc, gỡ bỏ class làm mờ
-track.addEventListener('transitionend', () => {
-    track.classList.remove('bluring');
+// Toggle history
+toggleBtn.addEventListener('click', () => {
+    contactHistory.classList.toggle('hidden');
+    toggleBtn.textContent = contactHistory.classList.contains('hidden') ? 
+        'Hiển thị lịch sử liên hệ' : 'Ẩn lịch sử liên hệ';
+    if (!contactHistory.classList.contains('hidden')) renderContactHistory();
 });
